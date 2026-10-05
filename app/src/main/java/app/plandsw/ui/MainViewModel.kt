@@ -56,16 +56,20 @@ data class ScheduleState(
     val askGroups: Boolean = false,
 )
 
+/** A block of search results; [title] is null when there is only one block and no header is needed. */
+data class SearchSection(@StringRes val title: Int?, val items: List<Target>)
+
 data class SearchState(
     val kind: TargetKind = TargetKind.TEACHER,
     val query: String = "",
-    val results: List<Target> = emptyList(),
+    /** Favourites first, then (for teachers) the ones from your schedule, then everyone else. */
+    val sections: List<SearchSection> = emptyList(),
     val loading: Boolean = false,
     @StringRes val error: Int? = null,
     val searched: Boolean = false,
-    /** How many leading results are teachers from your schedule (a separate section on top). */
-    val mine: Int = 0,
-)
+) {
+    val isEmpty: Boolean get() = sections.all { it.items.isEmpty() }
+}
 
 data class UpdateState(
     val available: AppUpdate? = null,
@@ -170,6 +174,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun toggleFavorite(t: Target) = repo.toggleFavorite(t)
+
+    /** Key of your own schedule (the chosen field of study). */
+    val primaryKey: String? get() = repo.primary?.key
+
+    fun openPrimary() {
+        repo.primary?.let { open(it) }
+    }
 
     // ---- App updates ----
 
@@ -438,24 +449,30 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             val loaded = if (kind == TargetKind.ROOM) rooms != null else teachersLoad?.isCompleted == true
             if (!loaded) _search.update { it.copy(loading = true, error = null) }
             try {
-                var mine = 0
-                val results = when (kind) {
+                val found = when (kind) {
                     TargetKind.ROOM -> filterTargets(rooms ?: repo.rooms().also { rooms = it }, query)
                     else -> {
                         val all = allTeachers()
-                        if (all.isEmpty()) {
+                        if (all.isNotEmpty()) filterTargets(all, query)
+                        else {
                             // The site did not return the full list - search by surname as before.
                             if (debounce) delay(500)
                             if (query.length < 2) emptyList() else repo.searchTeachers(query)
-                        } else {
-                            val own = myTeachers()
-                            val (first, rest) = filterTargets(all, query).partition { it.name.fold() in own }
-                            mine = first.size
-                            first + rest
                         }
                     }
                 }
-                _search.update { it.copy(results = results, mine = mine, loading = false, error = null, searched = true) }
+                val favKeys = favorites.value.map { it.key }.toSet()
+                val (favs, others) = found.partition { it.key in favKeys }
+                val own = if (kind == TargetKind.TEACHER) myTeachers() else emptySet()
+                val (mine, rest) = others.partition { it.name.fold() in own }
+                val allTitle = if (kind == TargetKind.ROOM) R.string.search_all_rooms else R.string.search_all_teachers
+                val sections = listOf(
+                    SearchSection(R.string.search_favorites, favs),
+                    SearchSection(R.string.search_your_teachers, mine),
+                    SearchSection(allTitle, rest),
+                ).filter { it.items.isNotEmpty() }
+                    .let { list -> if (list.size == 1) list.map { it.copy(title = null) } else list }
+                _search.update { it.copy(sections = sections, loading = false, error = null, searched = true) }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

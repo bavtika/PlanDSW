@@ -76,9 +76,6 @@
     <string name="duration_h">%1$d ч</string>
     <string name="duration_h_min">%1$d ч %2$d мин</string>
 
-    <string name="schedule_switch">Сменить расписание</string>
-    <string name="menu_change_program">Сменить направление…</string>
-    <string name="menu_teacher_room">Преподаватель или аудитория…</string>
     <string name="favorite_add">В избранное</string>
     <string name="favorite_remove">Убрать из избранного</string>
     <string name="schedule_loading">Загружаем расписание…</string>
@@ -110,7 +107,6 @@
     <string name="search_room_hint">Например: S55 111</string>
     <string name="language_title">Язык</string>
     <string name="language_subtitle">Выберите язык приложения</string>
-    <string name="menu_settings">Настройки</string>
     <string name="settings_title">Настройки</string>
     <string name="settings_language">Язык</string>
     <string name="settings_theme">Тема</string>
@@ -169,4 +165,6 @@
     <string name="subject_finished">Все занятия прошли</string>
     <string name="search_your_teachers">Ваши преподаватели</string>
     <string name="search_all_teachers">Все преподаватели</string>
+    <string name="search_favorites">Избранное</string>
+    <string name="search_all_rooms">Все аудитории</string>
 </resources>

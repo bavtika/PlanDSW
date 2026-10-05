@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Grade
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
@@ -14,9 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import app.plandsw.R
 
-enum class MainTab { SCHEDULE, SUBJECTS, GRADES }
+enum class MainTab { SCHEDULE, SUBJECTS, GRADES, SETTINGS }
 
-/** Bottom tabs: schedule, subjects, grades; grades show a new-items counter. */
+/** Bottom tabs: schedule, subjects, grades, settings; grades show a new-items counter. */
 @Composable
 fun MainTabsBar(selected: MainTab, newGrades: Int, onSelect: (MainTab) -> Unit) {
     NavigationBar {
@@ -41,6 +42,12 @@ fun MainTabsBar(selected: MainTab, newGrades: Int, onSelect: (MainTab) -> Unit) 
                 }
             },
             label = { Text(stringResource(R.string.grades_title)) },
+        )
+        NavigationBarItem(
+            selected = selected == MainTab.SETTINGS,
+            onClick = { onSelect(MainTab.SETTINGS) },
+            icon = { Icon(Icons.Outlined.Settings, null) },
+            label = { Text(stringResource(R.string.settings_title)) },
         )
     }
 }

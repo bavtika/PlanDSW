@@ -76,9 +76,6 @@
     <string name="duration_h">%1$d godz.</string>
     <string name="duration_h_min">%1$d godz. %2$d min</string>
 
-    <string name="schedule_switch">Zmień plan</string>
-    <string name="menu_change_program">Zmień kierunek…</string>
-    <string name="menu_teacher_room">Prowadzący lub sala…</string>
     <string name="favorite_add">Dodaj do ulubionych</string>
     <string name="favorite_remove">Usuń z ulubionych</string>
     <string name="schedule_loading">Wczytywanie planu…</string>
@@ -110,7 +107,6 @@
     <string name="search_room_hint">Na przykład: S55 111</string>
     <string name="language_title">Język</string>
     <string name="language_subtitle">Wybierz język aplikacji</string>
-    <string name="menu_settings">Ustawienia</string>
     <string name="settings_title">Ustawienia</string>
     <string name="settings_language">Język</string>
     <string name="settings_theme">Motyw</string>
@@ -169,4 +165,6 @@
     <string name="subject_finished">Wszystkie zajęcia już się odbyły</string>
     <string name="search_your_teachers">Twoi prowadzący</string>
     <string name="search_all_teachers">Wszyscy prowadzący</string>
+    <string name="search_favorites">Ulubione</string>
+    <string name="search_all_rooms">Wszystkie sale</string>
 </resources>

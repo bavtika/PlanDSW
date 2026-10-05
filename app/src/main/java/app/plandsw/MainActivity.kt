@@ -31,7 +31,7 @@ import app.plandsw.ui.UsosLoginScreen
 import app.plandsw.ui.applyLanguage
 import app.plandsw.ui.isDarkTheme
 
-private enum class Screen { LANGUAGE, SCHEDULE, SEARCH, SETUP, SETTINGS, USOS_LOGIN }
+private enum class Screen { LANGUAGE, SCHEDULE, SEARCH, SETUP, USOS_LOGIN }
 
 class MainActivity : AppCompatActivity() {
     private val vm: MainViewModel by viewModels()
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 LaunchedEffect(setup.done) {
                     if (setup.done != null) {
                         screen = Screen.SCHEDULE
+                        tab = MainTab.SCHEDULE
                         vm.setupConsumed()
                     }
                 }
@@ -118,22 +119,6 @@ class MainActivity : AppCompatActivity() {
                             onBack = { screen = Screen.SCHEDULE },
                         )
                     }
-                    Screen.SETTINGS -> {
-                        BackHandler { screen = Screen.SCHEDULE }
-                        SettingsScreen(
-                            theme = themeMode,
-                            groups = schedule.groups,
-                            selectedGroups = schedule.selectedGroups,
-                            onTheme = vm::setTheme,
-                            onLanguage = { tag -> vm.chooseLanguage(tag); applyLanguage(tag) },
-                            onChangeProgram = { vm.startSetup(); screen = Screen.SETUP },
-                            onGroups = vm::setGroups,
-                            update = update,
-                            onCheckUpdates = { vm.checkForUpdate(manual = true) },
-                            onInstallUpdate = vm::installUpdate,
-                            onBack = { screen = Screen.SCHEDULE },
-                        )
-                    }
                     Screen.USOS_LOGIN -> {
                         BackHandler { screen = Screen.SCHEDULE }
                         UsosLoginScreen(
@@ -153,16 +138,30 @@ class MainActivity : AppCompatActivity() {
                             onLogout = grades::logout,
                             bottomBar = { MainTabsBar(tab, gradesState.unseen.size) { tab = it } },
                         )
+                    } else if (tab == MainTab.SETTINGS) {
+                        BackHandler { tab = MainTab.SCHEDULE }
+                        SettingsScreen(
+                            theme = themeMode,
+                            groups = schedule.groups,
+                            selectedGroups = schedule.selectedGroups,
+                            onTheme = vm::setTheme,
+                            onLanguage = { tag -> vm.chooseLanguage(tag); applyLanguage(tag) },
+                            onChangeProgram = { vm.startSetup(); screen = Screen.SETUP },
+                            onGroups = vm::setGroups,
+                            update = update,
+                            onCheckUpdates = { vm.checkForUpdate(manual = true) },
+                            onInstallUpdate = vm::installUpdate,
+                            bottomBar = { MainTabsBar(tab, gradesState.unseen.size) { tab = it } },
+                        )
                     } else scheduleState.SaveableStateProvider("schedule") {
                         ScheduleScreen(
                             state = schedule,
                             favorites = favorites,
-                            onOpen = vm::open,
+                            onHome = vm::openPrimary.takeIf { vm.primaryKey.let { it != null && it != schedule.target?.key } },
                             onToggleFavorite = vm::toggleFavorite,
                             onRefresh = vm::refresh,
                             onSearch = { vm.openSearch(); screen = Screen.SEARCH },
                             onSetup = { vm.startSetup(); screen = Screen.SETUP },
-                            onSettings = { screen = Screen.SETTINGS },
                             onGroups = vm::setGroups,
                             onDismissGroupPrompt = vm::dismissGroupPrompt,
                             tab = tab,

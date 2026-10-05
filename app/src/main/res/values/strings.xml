@@ -85,9 +85,6 @@
     <string name="duration_h_min">%1$d h %2$d min</string>
 
     <!-- Schedule screen -->
-    <string name="schedule_switch">Switch schedule</string>
-    <string name="menu_change_program">Change field of study…</string>
-    <string name="menu_teacher_room">Teacher or room…</string>
     <string name="favorite_add">Add to favourites</string>
     <string name="favorite_remove">Remove from favourites</string>
     <string name="schedule_loading">Loading schedule…</string>
@@ -118,7 +115,6 @@
     <string name="search_room_hint">For example: S55 111</string>
     <string name="language_title">Language</string>
     <string name="language_subtitle">Choose the app language</string>
-    <string name="menu_settings">Settings</string>
     <string name="settings_title">Settings</string>
     <string name="settings_language">Language</string>
     <string name="settings_theme">Theme</string>
@@ -177,4 +173,6 @@
     <string name="subject_finished">All classes are over</string>
     <string name="search_your_teachers">Your teachers</string>
     <string name="search_all_teachers">All teachers</string>
+    <string name="search_favorites">Favourites</string>
+    <string name="search_all_rooms">All rooms</string>
 </resources>

@@ -76,9 +76,6 @@
     <string name="duration_h">%1$d год</string>
     <string name="duration_h_min">%1$d год %2$d хв</string>
 
-    <string name="schedule_switch">Змінити розклад</string>
-    <string name="menu_change_program">Змінити напрям…</string>
-    <string name="menu_teacher_room">Викладач або аудиторія…</string>
     <string name="favorite_add">Додати в обране</string>
     <string name="favorite_remove">Прибрати з обраного</string>
     <string name="schedule_loading">Завантажуємо розклад…</string>
@@ -110,7 +107,6 @@
     <string name="search_room_hint">Наприклад: S55 111</string>
     <string name="language_title">Мова</string>
     <string name="language_subtitle">Оберіть мову застосунку</string>
-    <string name="menu_settings">Налаштування</string>
     <string name="settings_title">Налаштування</string>
     <string name="settings_language">Мова</string>
     <string name="settings_theme">Тема</string>
@@ -169,4 +165,6 @@
     <string name="subject_finished">Усі заняття минули</string>
     <string name="search_your_teachers">Ваші викладачі</string>
     <string name="search_all_teachers">Усі викладачі</string>
+    <string name="search_favorites">Обране</string>
+    <string name="search_all_rooms">Усі аудиторії</string>
 </resources>

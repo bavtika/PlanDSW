@@ -9,7 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Info
@@ -20,7 +19,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.RadioButton
@@ -67,19 +65,15 @@ fun SettingsScreen(
     update: UpdateState,
     onCheckUpdates: () -> Unit,
     onInstallUpdate: () -> Unit,
-    onBack: () -> Unit,
+    bottomBar: @Composable () -> Unit,
 ) {
     var dialog by rememberSaveable { mutableStateOf<SettingsDialog?>(null) }
     val language = remember { currentLanguageTag() }
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.settings_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back)) }
-                },
-            )
+            TopAppBar(title = { Text(stringResource(R.string.settings_title)) })
         },
+        bottomBar = bottomBar,
     ) { padding ->
         Column(
             Modifier

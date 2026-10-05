@@ -111,19 +111,14 @@ fun SearchScreen(
             }
             when {
                 state.error != null -> Message(stringResource(state.error))
-                state.searched && state.results.isEmpty() && !state.loading -> Message(stringResource(R.string.nothing_found))
+                state.searched && state.isEmpty && !state.loading -> Message(stringResource(R.string.nothing_found))
                 else -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
-                    // Teachers from your schedule on top, everyone else below.
-                    val mine = if (state.kind == TargetKind.TEACHER) state.mine.coerceAtMost(state.results.size) else 0
-                    if (mine > 0) item(key = "h_mine") { SectionHeader(stringResource(R.string.search_your_teachers)) }
-                    items(state.results.take(mine), key = { "m_${it.key}" }) { t ->
-                        TargetRow(t, favorites.any { it.key == t.key }, onPick, onToggleFavorite)
-                    }
-                    if (mine > 0 && state.results.size > mine) {
-                        item(key = "h_all") { SectionHeader(stringResource(R.string.search_all_teachers)) }
-                    }
-                    items(state.results.drop(mine), key = { it.key }) { t ->
-                        TargetRow(t, favorites.any { it.key == t.key }, onPick, onToggleFavorite)
+                    // Favourites, then teachers from your schedule, then everyone else.
+                    state.sections.forEach { section ->
+                        section.title?.let { title -> item(key = "h_$title") { SectionHeader(stringResource(title)) } }
+                        items(section.items, key = { "${section.title}_${it.key}" }) { t ->
+                            TargetRow(t, favorites.any { it.key == t.key }, onPick, onToggleFavorite)
+                        }
                     }
                 }
             }

@@ -29,7 +29,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Email
@@ -39,11 +38,8 @@ import androidx.compose.material.icons.outlined.MeetingRoom
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -106,12 +102,12 @@ fun kindIcon(kind: TargetKind) = when (kind) {
 fun ScheduleScreen(
     state: ScheduleState,
     favorites: List<Target>,
-    onOpen: (Target) -> Unit,
+    /** Back to your own schedule; null when it is already shown. */
+    onHome: (() -> Unit)?,
     onToggleFavorite: (Target) -> Unit,
     onRefresh: () -> Unit,
     onSearch: () -> Unit,
     onSetup: () -> Unit,
-    onSettings: () -> Unit,
     onGroups: (Set<String>) -> Unit,
     onDismissGroupPrompt: () -> Unit,
     tab: MainTab,
@@ -129,7 +125,6 @@ fun ScheduleScreen(
         return
     }
     val context = LocalContext.current
-    var menuOpen by remember { mutableStateOf(false) }
     var selectedLesson by remember { mutableStateOf<Lesson?>(null) }
     var groupsOpen by remember { mutableStateOf(false) }
     var changesOpen by remember { mutableStateOf(false) }
@@ -148,6 +143,7 @@ fun ScheduleScreen(
     BackHandler(enabled = subjectsTab) {
         if (openSubject != null) openSubjectName = null else onTab(MainTab.SCHEDULE)
     }
+    BackHandler(enabled = !subjectsTab && onHome != null) { onHome?.invoke() }
 
     Scaffold(
         topBar = {
@@ -164,54 +160,25 @@ fun ScheduleScreen(
                 )
             } else TopAppBar(
                 title = {
-                    Box {
-                        Row(
-                            Modifier
-                                .clip(RoundedCornerShape(8.dp))
-                                .clickable { menuOpen = true }
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Column(Modifier.weight(1f, fill = false)) {
-                                Text(target.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
-                                Text(
-                                    listOfNotNull(
-                                        groupSummary(state),
-                                        updatedText(state.fetchedAt, state.loading, failed = state.error != null)
-                                            .takeIf { it.isNotEmpty() },
-                                    ).joinToString(" · "),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
-                            }
-                            Icon(Icons.Filled.ArrowDropDown, stringResource(R.string.schedule_switch))
-                        }
-                        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                            favorites.forEach { fav ->
-                                DropdownMenuItem(
-                                    text = { Text(fav.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                                    leadingIcon = { Icon(kindIcon(fav.kind), null) },
-                                    onClick = { menuOpen = false; onOpen(fav) },
-                                )
-                            }
-                            if (favorites.isNotEmpty()) HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.menu_change_program)) },
-                                leadingIcon = { Icon(Icons.Outlined.School, null) },
-                                onClick = { menuOpen = false; onSetup() },
-                            )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.menu_teacher_room)) },
-                                leadingIcon = { Icon(Icons.Outlined.Search, null) },
-                                onClick = { menuOpen = false; onSearch() },
-                            )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.menu_settings)) },
-                                leadingIcon = { Icon(Icons.Outlined.Settings, null) },
-                                onClick = { menuOpen = false; onSettings() },
-                            )
+                    Column {
+                        Text(target.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            listOfNotNull(
+                                groupSummary(state),
+                                updatedText(state.fetchedAt, state.loading, failed = state.error != null)
+                                    .takeIf { it.isNotEmpty() },
+                            ).joinToString(" · "),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                },
+                navigationIcon = {
+                    if (onHome != null) {
+                        IconButton(onClick = onHome) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
                         }
                     }
                 },
