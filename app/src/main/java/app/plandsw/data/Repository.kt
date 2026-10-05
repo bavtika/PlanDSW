@@ -61,8 +61,12 @@ class Repository private constructor(context: Context, private val api: IdeisApi
 
     fun toggleFavorite(t: Target) {
         val list = _favorites.value
-        _favorites.value = if (isFavorite(t)) list.filterNot { it.key == t.key } else list + t
-        prefs.edit().putString("favorites", json.encodeToString(_favorites.value)).apply()
+        setFavorites(if (isFavorite(t)) list.filterNot { it.key == t.key } else list + t)
+    }
+
+    private fun setFavorites(list: List<Target>) {
+        _favorites.value = list
+        prefs.edit().putString("favorites", json.encodeToString(list)).apply()
     }
 
     var lastOpened: Target?
@@ -100,6 +104,31 @@ class Repository private constructor(context: Context, private val api: IdeisApi
             prefs.edit().putString("primary", value?.let { json.encodeToString(it) }).apply()
             bumpWidget()
         }
+
+    init {
+        // Older versions kept every tok ever chosen in favourites; only the current one stays.
+        primary?.let { p ->
+            val list = _favorites.value
+            if (list.any { it.kind == TargetKind.TOK && it.key != p.key }) {
+                setFavorites(list.filter { it.kind != TargetKind.TOK || it.key == p.key })
+            }
+        }
+    }
+
+    /**
+     * There is only one field of study at a time: the new tok replaces the old one in favourites,
+     * and the old tok's cache and pending changes are dropped.
+     */
+    fun replacePrimary(tok: Target) {
+        val old = primary
+        if (old != null && old.key != tok.key) {
+            File(cacheDir, "${old.key}.json").delete()
+            clearChanges()
+        }
+        setFavorites(listOf(tok) + _favorites.value.filter { it.kind != TargetKind.TOK })
+        if (lastOpened?.kind == TargetKind.TOK) lastOpened = tok
+        primary = tok
+    }
 
     /** Language chosen in the app (en/pl/ru/uk); null — not chosen yet. */
     var languageTag: String?
@@ -175,10 +204,6 @@ class Repository private constructor(context: Context, private val api: IdeisApi
         val tag = languageTag ?: return context
         val config = Configuration(context.resources.configuration).apply { setLocale(Locale.forLanguageTag(tag)) }
         return context.createConfigurationContext(config)
-    }
-
-    fun addFavorite(t: Target) {
-        if (!isFavorite(t)) toggleFavorite(t)
     }
 
     suspend fun tokFilters() = api.loadTokFilters()

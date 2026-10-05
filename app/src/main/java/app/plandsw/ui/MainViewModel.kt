@@ -159,7 +159,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val installer = ApkInstaller(app)
 
     init {
-        (repo.lastOpened ?: favorites.value.firstOrNull())?.let { open(it) }
+        // A tok other than the current field of study is an old choice: open the current one instead.
+        val last = repo.lastOpened?.takeUnless { it.kind == TargetKind.TOK && it.key != repo.primary?.key }
+        (last ?: repo.primary ?: favorites.value.firstOrNull())?.let { open(it) }
         viewModelScope.launch {
             // KEEP: if the work is already scheduled, nothing changes.
             if (GlanceAppWidgetManager(app).getGlanceIds(PlanWidget::class.java).isNotEmpty()) RefreshWorker.schedule(app)
@@ -391,8 +393,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun finishSetup(tok: Target) {
-        repo.primary = tok
-        repo.addFavorite(tok)
+        repo.replacePrimary(tok)
         open(tok)
         _setup.update { it.copy(done = tok) }
     }
