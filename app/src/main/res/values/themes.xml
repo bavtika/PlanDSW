@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.PlanDSW" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/splash_bg</item>
+    </style>
+    <color name="splash_bg">#FEFCF6</color>
+    <color name="ic_launcher_background">#FFAD00</color>
+</resources>

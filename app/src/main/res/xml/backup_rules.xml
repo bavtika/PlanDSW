@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 and older: cookies of the USOS sign-in WebView and the grades cache never leave the phone. -->
+<full-backup-content>
+    <exclude domain="root" path="app_webview/" />
+    <exclude domain="file" path="grades.json" />
+</full-backup-content>

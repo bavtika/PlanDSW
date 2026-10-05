@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>moje oceny - oceny - USOSWEB</title></head>
+<body>
+<main-panel id="main"><main id="layout-main-content"><div class="usos-ui">
+<usos-frame>
+  <usos-frame-section section-title="Informatyka - studia I stopnia - stac."><div>
+    <usos-link icon-name="outlined.file_download"><a href="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazKartePrzebieguStudiow&amp;_lang=pl&amp;prgos_id=1" class=" newtab" target="_blank">Karta przebiegu studiów</a></usos-link>
+  </div></usos-frame-section>
+</usos-frame>
+<usos-frame id="oceny">
+  <h2 slot="title">Oceny końcowe z przedmiotów</h2>
+  <usos-frame-section section-title="Semestr zimowy 2026/27" expandable="" expanded="">
+    <table>
+      <thead class="screen-reader-only"><tr> <th>Przedmiot</th> <th>Program</th> <th>Ocena</th> <th>Akcje</th> </tr></thead>
+      <tbody>
+        <tr>
+          <td style="width: 50%;"> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&amp;prz_kod=S1-00-BADA2-3" onclick="return Common.confirmWarnings();" tabindex="0">Bazy danych II</a> [S1-00-BADA2-3] </td>
+          <td style="width: 20%;"> <span class="note">(niepodpięty)</span> </td>
+          <td style="text-align:right; white-space:nowrap; width: 15%;">
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=1" onclick="return Common.confirmWarnings();" class="wrhidden" title=" Wykład " tabindex="0">W</a>: <span class="note">(brak ocen)</span> </div>
+          </td>
+          <td style="width: 15%;"> <usos-dialog id="dialog1" dynamic="" url="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazOcenyPrzedmiotu&amp;prz_kod=S1-00-BADA2-3&amp;cdyd_kod=2026%2F27Z"></usos-dialog><usos-link icon-location="right"><a href="javascript:void(0)" onclick="document.getElementById('dialog1').open()" tabindex="0">szczegóły</a></usos-link> </td>
+        </tr>
+      </tbody>
+    </table>
+  </usos-frame-section>
+  <usos-frame-section section-title="Semestr letni 2025/26" expandable="">
+    <table>
+      <thead class="screen-reader-only"><tr> <th>Przedmiot</th> <th>Program</th> <th>Ocena</th> <th>Akcje</th> </tr></thead>
+      <tbody>
+        <tr>
+          <td style="width: 50%;"> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&amp;prz_kod=S1-00-ANALIZAMAT2-2" onclick="return Common.confirmWarnings();" tabindex="0">Analiza matematyczna II</a> [S1-00-ANALIZAMAT2-2] </td>
+          <td style="width: 20%;"> <div> n-in-Is (IN-Is-E2) </div> </td>
+          <td style="text-align:right; white-space:nowrap; width: 15%;">
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=2" onclick="return Common.confirmWarnings();" class="wrhidden" title=" Wykład " tabindex="0">W</a>: <span style=" color:#d00;">(2)</span> <span style=" font-weight:bold; font-size: 115%; ">3</span> </div>
+          </td>
+          <td style="width: 15%;"> <usos-dialog id="dialog2" dynamic="" url="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazOcenyPrzedmiotu&amp;prz_kod=S1-00-ANALIZAMAT2-2&amp;cdyd_kod=2025%2F26L"></usos-dialog><usos-link icon-location="right"><a href="javascript:void(0)" onclick="document.getElementById('dialog2').open()" tabindex="0">szczegóły</a></usos-link> </td>
+        </tr>
+        <tr>
+          <td style="width: 50%;"> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&amp;prz_kod=S1-00-BAZDAN1-2" onclick="return Common.confirmWarnings();" tabindex="0">Bazy danych I</a> [S1-00-BAZDAN1-2] </td>
+          <td style="width: 20%;"> <div> n-in-Is (IN-Is-E2) </div> </td>
+          <td style="text-align:right; white-space:nowrap; width: 15%;">
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=3" onclick="return Common.confirmWarnings();" class="wrhidden" title=" Wykład " tabindex="0">W</a>: <span style=" font-weight:bold; font-size: 115%; ">4</span> </div>
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=4" onclick="return Common.confirmWarnings();" class="wrhidden" title=" Ćwiczenia " tabindex="0">CW</a>: <span style=" color:#d00;">(NZAL)</span> <span style=" font-weight:bold; font-size: 115%; ">ZAL</span> </div>
+          </td>
+          <td style="width: 15%;"> <usos-dialog id="dialog3" dynamic="" url="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazOcenyPrzedmiotu&amp;prz_kod=S1-00-BAZDAN1-2&amp;cdyd_kod=2025%2F26L"></usos-dialog><usos-link icon-location="right"><a href="javascript:void(0)" onclick="document.getElementById('dialog3').open()" tabindex="0">szczegóły</a></usos-link> </td>
+        </tr>
+        <tr>
+          <td style="width: 50%;"> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&amp;prz_kod=S1-00-FIZ-2" onclick="return Common.confirmWarnings();" tabindex="0">Fizyka</a> [S1-00-FIZ-2] </td>
+          <td style="width: 20%;"> <div> n-in-Is (IN-Is-E2) </div> </td>
+          <td style="text-align:right; white-space:nowrap; width: 15%;">
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=5" onclick="return Common.confirmWarnings();" class="wrhidden" title=" Wykład " tabindex="0">W</a>: <span style=" font-weight:bold; font-size: 115%; color:#d00;">2</span> </div>
+          </td>
+          <td style="width: 15%;"> <usos-dialog id="dialog4" dynamic="" url="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazOcenyPrzedmiotu&amp;prz_kod=S1-00-FIZ-2&amp;cdyd_kod=2025%2F26L"></usos-dialog><usos-link icon-location="right"><a href="javascript:void(0)" onclick="document.getElementById('dialog4').open()" tabindex="0">szczegóły</a></usos-link> </td>
+        </tr>
+        <tr>
+          <td style="width: 50%;"> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&amp;prz_kod=S1-00-PROG-2" onclick="return Common.confirmWarnings();" tabindex="0">Programowanie</a> [S1-00-PROG-2] </td>
+          <td style="width: 20%;"> <div> n-in-Is (IN-Is-E2) </div> </td>
+          <td style="text-align:right; white-space:nowrap; width: 15%;">
+            <div> <a href="https://usosweb.ideis.pl/kontroler.php?_action=katalog2/przedmioty/pokazGrupyZajec&amp;zaj_cyk_id=6" onclick="return Common.confirmWarnings();" class="wrhidden" title=" E-learning " tabindex="0">EL</a>: <span style=" font-weight:bold; font-size: 115%; ">3,5</span> </div>
+          </td>
+          <td style="width: 15%;"> <usos-dialog id="dialog5" dynamic="" url="https://usosweb.ideis.pl/kontroler.php?_action=dla_stud/studia/oceny/pokazOcenyPrzedmiotu&amp;prz_kod=S1-00-PROG-2&amp;cdyd_kod=2025%2F26L"></usos-dialog><usos-link icon-location="right"><a href="javascript:void(0)" onclick="document.getElementById('dialog5').open()" tabindex="0">szczegóły</a></usos-link> </td>
+        </tr>
+      </tbody>
+    </table>
+  </usos-frame-section>
+</usos-frame>
+</div></main></main-panel>
+</body>
+</html>

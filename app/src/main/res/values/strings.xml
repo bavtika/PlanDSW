@@ -1,0 +1,180 @@
+<resources>
+    <string name="app_name" translatable="false">Plan DSW</string>
+
+    <!-- Common -->
+    <string name="action_back">Back</string>
+    <string name="action_close">Close</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_done">Done</string>
+    <string name="action_all">All</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_search">Search</string>
+    <string name="action_email">Send email</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="filter_hint">Filter</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_timeout">The website isn\'t responding. Try again later.</string>
+    <string name="error_generic">Couldn\'t load data</string>
+    <string name="error_site_changed">The website returned an unexpected response</string>
+    <string name="error_no_faculties">The website didn\'t return the list of faculties</string>
+    <string name="error_no_kierunki">This faculty has no fields of study</string>
+    <string name="error_no_toks">No schedule found for these options. Check the intake and the study mode.</string>
+
+    <!-- Setup wizard -->
+    <string name="setup_title">Your schedule</string>
+    <string name="setup_step">Step %1$d of %2$d</string>
+    <string name="setup_faculty_hint">Choose your faculty</string>
+    <string name="setup_kierunek_hint">Choose your field of study</string>
+    <string name="setup_intake_hint">The semester in which you started your studies</string>
+    <string name="setup_mode_hint">Study mode</string>
+    <string name="setup_tok_hint">Several study programmes found — choose yours</string>
+    <string name="mode_part_time">part-time, usually at weekends</string>
+    <string name="mode_full_time">full-time</string>
+    <string name="setup_change_choice">Change selection</string>
+
+    <!-- Groups -->
+    <string name="groups_title">My groups</string>
+    <string name="groups_first_time">Select your groups — for example Cw2S, Lab2AS and ANG2S. Classes of other groups will be hidden. You can change this later with the filter button.</string>
+    <string name="groups_subtitle">Show classes of these groups</string>
+    <string name="group_cat_lecture">Lectures</string>
+    <string name="group_cat_exercise">Exercises</string>
+    <string name="group_cat_lab">Labs</string>
+    <string name="group_cat_language">Languages</string>
+    <string name="group_cat_seminar">Seminars</string>
+    <string name="group_cat_other">Other</string>
+    <string name="group_desc_lecture">lectures</string>
+    <string name="group_desc_exercise">exercises</string>
+    <string name="group_desc_lab">lab</string>
+    <string name="group_desc_seminar">seminar</string>
+    <string name="group_desc_numbered">%1$s, group %2$s</string>
+    <string name="group_desc_semester">%1$s (semester %2$s)</string>
+    <string name="langname_en">English</string>
+    <string name="langname_de">German</string>
+    <string name="langname_es">Spanish</string>
+    <string name="langname_ru">Russian</string>
+    <string name="langname_fr">French</string>
+    <string name="langname_it">Italian</string>
+    <string name="langname_pl">Polish</string>
+    <string name="langname_uk">Ukrainian</string>
+
+    <!-- Lesson types -->
+    <string name="type_lecture">Lecture</string>
+    <string name="type_exercises">Exercises</string>
+    <string name="type_lab">Lab</string>
+    <string name="type_seminar">Seminar</string>
+    <string name="type_language">Language class</string>
+    <string name="type_project">Project</string>
+    <string name="type_conversatory">Conversatorium</string>
+    <string name="type_workshop">Workshop</string>
+    <string name="type_practice">Practical training</string>
+    <string name="type_elearning">E-learning</string>
+
+    <!-- Lessons -->
+    <string name="lesson_online">Online</string>
+    <string name="lesson_remote">Remote class</string>
+    <string name="lesson_running">In progress · %1$s left</string>
+    <string name="lesson_break">Break: %1$s</string>
+    <string name="lesson_next">Next class in %1$s</string>
+    <string name="lesson_next_room">Next class in %1$s · %2$s</string>
+    <string name="lesson_exam_form">Assessment: %1$s</string>
+    <string name="lesson_add_calendar">Add to calendar</string>
+    <string name="duration_min">%1$d min</string>
+    <string name="duration_h">%1$d h</string>
+    <string name="duration_h_min">%1$d h %2$d min</string>
+
+    <!-- Schedule screen -->
+    <string name="schedule_switch">Switch schedule</string>
+    <string name="menu_change_program">Change field of study…</string>
+    <string name="menu_teacher_room">Teacher or room…</string>
+    <string name="favorite_add">Add to favourites</string>
+    <string name="favorite_remove">Remove from favourites</string>
+    <string name="schedule_loading">Loading schedule…</string>
+    <string name="status_loading">Loading…</string>
+    <string name="status_refreshing">Updating…</string>
+    <string name="updated_just_now">Updated just now</string>
+    <string name="updated_minutes">Updated %1$d min ago</string>
+    <string name="updated_hours">Updated %1$d h ago</string>
+    <string name="updated_date">Updated %1$s</string>
+    <string name="update_failed_suffix">couldn\'t refresh</string>
+    <string name="week_prev">Previous week</string>
+    <string name="week_next">Next week</string>
+    <string name="today">Today</string>
+    <string name="outside_semester">Outside the current semester</string>
+    <string name="no_classes">No classes</string>
+    <plurals name="lessons_count">
+        <item quantity="one">%d class</item>
+        <item quantity="other">%d classes</item>
+    </plurals>
+    <string name="welcome_text">Class schedule of DSW University. Choose your faculty and field of study — the schedule is saved and works offline.</string>
+    <string name="welcome_button">Choose field of study</string>
+
+    <!-- Search -->
+    <string name="search_title">Teacher or room</string>
+    <string name="search_teacher">Teacher</string>
+    <string name="search_room">Room</string>
+    <string name="search_teacher_hint">Surname, or first name and surname</string>
+    <string name="search_room_hint">For example: S55 111</string>
+    <string name="language_title">Language</string>
+    <string name="language_subtitle">Choose the app language</string>
+    <string name="menu_settings">Settings</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_change_program">Change field of study</string>
+    <string name="settings_groups">My groups</string>
+    <string name="settings_version">Version %1$s</string>
+    <string name="changes_banner">Schedule changes: %1$d</string>
+    <string name="changes_title">Schedule changes</string>
+    <string name="change_moved">%1$s: %2$s → %3$s</string>
+    <string name="change_cancelled">Cancelled: %1$s, %2$s</string>
+    <string name="change_added">New class: %1$s, %2$s</string>
+    <string name="change_room">%1$s, %2$s: room %3$s → %4$s</string>
+    <string name="widget_name">Classes</string>
+    <string name="widget_description">Your classes for today</string>
+    <string name="widget_today">Today</string>
+    <string name="widget_tomorrow">Tomorrow</string>
+    <string name="widget_no_schedule">Open the app and choose your schedule</string>
+    <string name="widget_no_classes">No upcoming classes</string>
+    <string name="update_available">Version %1$s is available</string>
+    <string name="update_install">Update</string>
+    <string name="update_whats_new">What\'s new</string>
+    <string name="update_no_notes">No description</string>
+    <string name="update_later">Later</string>
+    <string name="update_downloading">Downloading…</string>
+    <string name="update_check">Check for updates</string>
+    <string name="update_checking">Checking…</string>
+    <string name="update_latest">You have the latest version</string>
+    <string name="update_failed">Couldn\'t check for updates</string>
+    <string name="update_download_failed">Download failed</string>
+    <string name="update_allow_install">Allow installing apps from Plan DSW, then tap Update again</string>
+    <string name="usos_login_title">Sign in to USOS</string>
+    <string name="grades_title">Grades</string>
+    <string name="grades_more_options">More options</string>
+    <string name="usos_logout">Log out of USOS</string>
+    <string name="usos_login_button">Sign in to USOS</string>
+    <string name="grades_intro_title">Grades from USOS</string>
+    <string name="grades_intro_text">Sign in with your university account (Microsoft). You sign in on the university\'s website: the app never sees or stores your password, and your grades stay only on this phone.\n\nWhen Microsoft asks “Nie wylogowywać?” (Stay signed in?), choose “Tak” (Yes) — then the app will renew the sign-in by itself when the USOS session expires.</string>
+    <string name="grades_loading">Loading grades…</string>
+    <string name="grades_empty">No grades in USOS yet</string>
+    <string name="grades_load_failed">Couldn\'t load grades. Pull down to try again.</string>
+    <string name="grades_session_expired">Your USOS session has expired. Showing saved grades.</string>
+    <string name="grades_sign_in_again">Sign in</string>
+    <string name="grades_no_grade">no grade</string>
+    <string name="grades_new_badge">new</string>
+    <string name="grades_new_banner">New grades: %1$d</string>
+    <string name="grades_term_winter">Winter semester %1$s</string>
+    <string name="grades_term_summer">Summer semester %1$s</string>
+    <string name="tab_schedule">Schedule</string>
+    <string name="tab_subjects">Subjects</string>
+    <string name="subjects_empty">No classes in this schedule yet</string>
+    <string name="subject_next">Next: %1$s</string>
+    <string name="subject_progress">%1$d of %2$d done</string>
+    <string name="subject_finished">All classes are over</string>
+    <string name="search_your_teachers">Your teachers</string>
+    <string name="search_all_teachers">All teachers</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Calendar with a check mark: dark blue on the DSW orange background -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:translateX="30" android:translateY="30">
+        <!-- body -->
+        <path
+            android:fillColor="#04427C"
+            android:pathData="M6,8h36a4,4 0 0 1 4,4v28a4,4 0 0 1 -4,4h-36a4,4 0 0 1 -4,-4v-28a4,4 0 0 1 4,-4z" />
+        <!-- sheet -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M7,18h34v21a1,1 0 0 1 -1,1h-32a1,1 0 0 1 -1,-1z" />
+        <!-- rings -->
+        <path
+            android:fillColor="#04427C"
+            android:pathData="M13,3h4v10h-4zM31,3h4v10h-4z" />
+        <!-- cells -->
+        <path
+            android:fillColor="#04427C"
+            android:pathData="M11,22h6v5h-6zM21,22h6v5h-6zM31,22h6v5h-6zM11,31h6v5h-6zM21,31h6v5h-6z" />
+        <path
+            android:fillColor="#FFAD00"
+            android:pathData="M31,31h6v5h-6z" />
+    </group>
+</vector>

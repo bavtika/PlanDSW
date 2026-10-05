@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # checkout fetches the tag as lightweight; refetch it to read the annotated tag message.
+      - name: Fetch annotated tag
+        run: git fetch --force origin "refs/tags/${GITHUB_REF_NAME}:refs/tags/${GITHUB_REF_NAME}"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Decode keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.jks"
+      - name: Build signed APK
+        env:
+          PLANDSW_KEYSTORE: ${{ runner.temp }}/release.jks
+          PLANDSW_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          PLANDSW_KEY_ALIAS: plandsw
+          PLANDSW_KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          export VERSION_NAME="${GITHUB_REF_NAME#v}"
+          # v1.6.0 -> 10600: always grows with the version, independent of the run counter.
+          IFS=. read -r MAJOR MINOR PATCH <<< "${VERSION_NAME%%-*}"
+          export VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
+          ./gradlew testDebugUnitTest assembleRelease --no-daemon
+          APKSIGNER="$(ls -d "$ANDROID_HOME"/build-tools/* | tail -1)/apksigner"
+          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk | grep "CN=Plan DSW"
+          cp app/build/outputs/apk/release/app-release.apk "PlanDSW-${VERSION_NAME}.apk"
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION_NAME="${GITHUB_REF_NAME#v}"
+          NOTES="$(git tag -l --format='%(contents)' "$GITHUB_REF_NAME")"
+          gh release create "$GITHUB_REF_NAME" "PlanDSW-${VERSION_NAME}.apk" \
+            --title "Plan DSW ${VERSION_NAME}" --notes "${NOTES:-Plan DSW ${VERSION_NAME}}"
