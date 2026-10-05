@@ -27,6 +27,7 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
+import androidx.glance.material3.ColorProviders
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -35,8 +36,13 @@ import app.plandsw.R
 import app.plandsw.data.Lesson
 import app.plandsw.data.Repository
 import app.plandsw.data.WARSAW
+import app.plandsw.ui.DarkColors
+import app.plandsw.ui.LightColors
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+/** The app's own palette, so the widget matches the app instead of the wallpaper. */
+private val WidgetColors = ColorProviders(light = LightColors, dark = DarkColors)
 
 class PlanWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -48,7 +54,7 @@ class PlanWidget : GlanceAppWidget() {
             // So the data is re-read inside the composition on every widgetVersion change.
             val version by repo.widgetVersion.collectAsState()
             val data by produceState(initialValue = initial, key1 = version) { value = loadWidgetData(repo, context) }
-            GlanceTheme { WidgetBody(data.ctx, hasSchedule = data.hasSchedule, day = data.day, now = data.now) }
+            GlanceTheme(colors = WidgetColors) { WidgetBody(data.ctx, hasSchedule = data.hasSchedule, day = data.day, now = data.now) }
         }
     }
 }
@@ -83,7 +89,7 @@ private fun WidgetBody(ctx: Context, hasSchedule: Boolean, day: WidgetDay?, now:
     Column(
         GlanceModifier
             .fillMaxSize()
-            .background(colors.widgetBackground)
+            .background(colors.background)
             .cornerRadius(16.dp)
             .padding(12.dp)
             .clickable(actionStartActivity<MainActivity>()),
@@ -127,7 +133,7 @@ private fun LessonRow(ctx: Context, lesson: Lesson, now: LocalDateTime) {
         GlanceModifier
             .fillMaxWidth()
             .cornerRadius(8.dp)
-            .background(if (running) colors.primaryContainer else colors.widgetBackground)
+            .background(if (running) colors.primaryContainer else colors.background)
             .padding(horizontal = 6.dp, vertical = 4.dp)
             // List rows intercept touches — a click on the root column never gets here.
             .clickable(actionStartActivity<MainActivity>()),

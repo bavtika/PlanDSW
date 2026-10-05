@@ -24,13 +24,13 @@
     <string name="setup_kierunek_hint">Выберите направление</string>
     <string name="setup_intake_hint">Семестр, в котором вы начали учёбу</string>
     <string name="setup_mode_hint">Форма обучения</string>
-    <string name="setup_tok_hint">Найдено несколько потоков — выберите свой</string>
+    <string name="setup_tok_hint">Найдено несколько потоков. Выберите свой.</string>
     <string name="mode_part_time">заочная форма, обычно по выходным</string>
     <string name="mode_full_time">дневная форма</string>
     <string name="setup_change_choice">Изменить выбор</string>
 
     <string name="groups_title">Мои группы</string>
-    <string name="groups_first_time">Отметьте свои группы — например, Cw2S, Lab2AS и ANG2S. Пары остальных групп скроются. Поменять можно кнопкой фильтра.</string>
+    <string name="groups_first_time">Отметьте свои группы, например Cw2S, Lab2AS и ANG2S. Пары остальных групп скроются. Поменять можно кнопкой фильтра.</string>
     <string name="groups_subtitle">Пары каких групп показывать</string>
     <string name="group_cat_lecture">Лекции</string>
     <string name="group_cat_exercise">Упражнения</string>
@@ -97,7 +97,7 @@
         <item quantity="many">%d занятий</item>
         <item quantity="other">%d занятия</item>
     </plurals>
-    <string name="welcome_text">Расписание занятий Uniwersytetu DSW. Выберите факультет и направление — расписание сохранится и будет доступно без интернета.</string>
+    <string name="welcome_text">Расписание занятий Uniwersytetu DSW. Выберите факультет и направление. Расписание сохранится и будет доступно без интернета.</string>
     <string name="welcome_button">Выбрать направление</string>
 
     <string name="search_title">Преподаватель или аудитория</string>
@@ -146,7 +146,7 @@
     <string name="usos_logout">Выйти из USOS</string>
     <string name="usos_login_button">Войти в USOS</string>
     <string name="grades_intro_title">Оценки из USOS</string>
-    <string name="grades_intro_text">Войдите учётной записью университета (Microsoft). Вход идёт на сайте вуза: приложение не видит и не хранит пароль, а оценки остаются только на телефоне.\n\nНа вопросе Microsoft «Nie wylogowywać?» («Не выходить из системы?») выберите «Tak» — тогда приложение само продлит вход, когда сессия USOS истечёт.</string>
+    <string name="grades_intro_text">Войдите учётной записью университета (Microsoft). Вход идёт на сайте вуза: приложение не видит и не хранит пароль, а оценки остаются только на телефоне.\n\nНа вопросе Microsoft «Nie wylogowywać?» («Не выходить из системы?») выберите «Tak». Тогда приложение само продлит вход, когда сессия USOS истечёт.</string>
     <string name="grades_loading">Загружаем оценки…</string>
     <string name="grades_empty">В USOS пока нет оценок</string>
     <string name="grades_load_failed">Не удалось загрузить оценки. Потяните вниз, чтобы повторить.</string>

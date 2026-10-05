@@ -22,7 +22,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -69,7 +68,7 @@ fun SearchScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.padding(horizontal = Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.md)) {
                 val kinds = listOf(TargetKind.TEACHER, TargetKind.ROOM)
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
                     kinds.forEachIndexed { i, kind ->
@@ -106,13 +105,13 @@ fun SearchScreen(
                     keyboardActions = KeyboardActions(onSearch = { onSubmit() }),
                 )
             }
-            Box(Modifier.fillMaxWidth().padding(top = 8.dp)) {
-                if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+            Box(Modifier.fillMaxWidth().padding(top = Spacing.sm)) {
+                if (state.loading) LoadingBar(Modifier.fillMaxWidth())
             }
             when {
                 state.error != null -> Message(stringResource(state.error))
                 state.searched && state.isEmpty && !state.loading -> Message(stringResource(R.string.nothing_found))
-                else -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+                else -> LazyColumn(contentPadding = PaddingValues(bottom = Spacing.xl)) {
                     // Favourites, then teachers from your schedule, then everyone else.
                     state.sections.forEach { section ->
                         section.title?.let { title -> item(key = "h_$title") { SectionHeader(stringResource(title)) } }
@@ -132,7 +131,7 @@ private fun SectionHeader(text: String) {
         text,
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp),
+        modifier = Modifier.padding(start = Spacing.lg, end = Spacing.lg, top = Spacing.lg, bottom = Spacing.xs),
     )
 }
 
@@ -161,7 +160,7 @@ private fun Message(text: String) {
         text,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

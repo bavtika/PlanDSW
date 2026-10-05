@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -51,15 +55,20 @@ fun LanguageScreen(onChosen: (String) -> Unit) {
             Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(top = 48.dp),
+                .padding(top = Spacing.xxl + Spacing.lg),
         ) {
-            Column(Modifier.padding(horizontal = 24.dp)) {
-                Text("🌍", style = MaterialTheme.typography.displayMedium)
-                Spacer(Modifier.height(12.dp))
+            Column(Modifier.padding(horizontal = Spacing.xl)) {
+                Icon(
+                    Icons.Outlined.Language,
+                    null,
+                    Modifier.size(IconSize.hero),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Spacer(Modifier.height(Spacing.md))
                 Text(stringResource(R.string.language_title), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
                 Text(stringResource(R.string.language_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(Spacing.lg))
             APP_LANGUAGES.forEach { lang ->
                 ListItem(
                     headlineContent = { Text(lang.nativeName, style = MaterialTheme.typography.titleMedium) },

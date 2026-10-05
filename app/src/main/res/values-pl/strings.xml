@@ -24,13 +24,13 @@
     <string name="setup_kierunek_hint">Wybierz kierunek</string>
     <string name="setup_intake_hint">Semestr, w którym rozpoczęto studia</string>
     <string name="setup_mode_hint">Tryb studiów</string>
-    <string name="setup_tok_hint">Znaleziono kilka toków — wybierz swój</string>
+    <string name="setup_tok_hint">Znaleziono kilka toków. Wybierz swój.</string>
     <string name="mode_part_time">zaoczne, zwykle w weekendy</string>
     <string name="mode_full_time">dzienne</string>
     <string name="setup_change_choice">Zmień wybór</string>
 
     <string name="groups_title">Moje grupy</string>
-    <string name="groups_first_time">Zaznacz swoje grupy — np. Cw2S, Lab2AS i ANG2S. Zajęcia innych grup zostaną ukryte. Możesz to zmienić później przyciskiem filtra.</string>
+    <string name="groups_first_time">Zaznacz swoje grupy, np. Cw2S, Lab2AS i ANG2S. Zajęcia innych grup zostaną ukryte. Możesz to zmienić później przyciskiem filtra.</string>
     <string name="groups_subtitle">Pokazuj zajęcia tych grup</string>
     <string name="group_cat_lecture">Wykłady</string>
     <string name="group_cat_exercise">Ćwiczenia</string>
@@ -97,7 +97,7 @@
         <item quantity="many">%d zajęć</item>
         <item quantity="other">%d zajęć</item>
     </plurals>
-    <string name="welcome_text">Plan zajęć Uniwersytetu DSW. Wybierz wydział i kierunek — plan zostanie zapisany i będzie dostępny offline.</string>
+    <string name="welcome_text">Plan zajęć Uniwersytetu DSW. Wybierz wydział i kierunek. Plan zostanie zapisany i będzie dostępny offline.</string>
     <string name="welcome_button">Wybierz kierunek</string>
 
     <string name="search_title">Prowadzący lub sala</string>
@@ -146,7 +146,7 @@
     <string name="usos_logout">Wyloguj z USOS</string>
     <string name="usos_login_button">Zaloguj się do USOS</string>
     <string name="grades_intro_title">Oceny z USOS</string>
-    <string name="grades_intro_text">Zaloguj się kontem uczelnianym (Microsoft). Logowanie odbywa się na stronie uczelni: aplikacja nie widzi ani nie przechowuje hasła, a oceny zostają tylko w telefonie.\n\nGdy Microsoft zapyta „Nie wylogowywać?”, wybierz „Tak” — wtedy aplikacja sama odnowi logowanie, gdy sesja USOS wygaśnie.</string>
+    <string name="grades_intro_text">Zaloguj się kontem uczelnianym (Microsoft). Logowanie odbywa się na stronie uczelni: aplikacja nie widzi ani nie przechowuje hasła, a oceny zostają tylko w telefonie.\n\nGdy Microsoft zapyta „Nie wylogowywać?”, wybierz „Tak”. Wtedy aplikacja sama odnowi logowanie, gdy sesja USOS wygaśnie.</string>
     <string name="grades_loading">Wczytywanie ocen…</string>
     <string name="grades_empty">W USOS nie ma jeszcze ocen</string>
     <string name="grades_load_failed">Nie udało się wczytać ocen. Przeciągnij w dół, aby spróbować ponownie.</string>

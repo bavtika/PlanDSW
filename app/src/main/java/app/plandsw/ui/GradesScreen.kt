@@ -146,8 +146,8 @@ fun GradesScreen(
             ) {
                 LazyColumn(
                     Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(Spacing.lg),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     if (state.loginRequired) item { SessionExpiredCard(onLogin) }
                     if (state.terms.isEmpty() && !state.loginRequired) item {
@@ -159,7 +159,7 @@ fun GradesScreen(
                                     else -> R.string.grades_load_failed
                                 }
                             ),
-                            Modifier.fillMaxWidth().padding(top = 32.dp),
+                            Modifier.fillMaxWidth().padding(top = Spacing.xxl),
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -168,7 +168,7 @@ fun GradesScreen(
                         item {
                             Text(
                                 termLabel(term),
-                                Modifier.padding(top = 8.dp),
+                                Modifier.padding(top = Spacing.sm),
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.primary,
                             )
@@ -187,20 +187,20 @@ private fun LoginIntro(onLogin: () -> Unit, modifier: Modifier) {
         modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Icon(Icons.Outlined.Grade, null, Modifier.size(48.dp), tint = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(16.dp))
+        Icon(Icons.Outlined.Grade, null, Modifier.size(IconSize.hero), tint = MaterialTheme.colorScheme.primary)
+        Spacer(Modifier.height(Spacing.lg))
         Text(stringResource(R.string.grades_intro_title), style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Spacing.sm))
         Text(
             stringResource(R.string.grades_intro_text),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(Spacing.xl))
         Button(onClick = onLogin) { Text(stringResource(R.string.usos_login_button)) }
     }
 }
@@ -211,7 +211,7 @@ private fun SessionExpiredCard(onLogin: () -> Unit) {
         Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
     ) {
-        Row(Modifier.padding(start = 16.dp, end = 8.dp, top = 4.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.padding(start = Spacing.lg, end = Spacing.sm, top = Spacing.xs, bottom = Spacing.xs), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 stringResource(R.string.grades_session_expired),
                 Modifier.weight(1f),
@@ -226,7 +226,7 @@ private fun SessionExpiredCard(onLogin: () -> Unit) {
 @Composable
 private fun CourseCard(termCode: String, course: CourseGrades, highlighted: Set<String>) {
     Card(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.md), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
             Text(course.name, style = MaterialTheme.typography.titleSmall)
             course.classes.forEach { grade ->
                 ClassGradeRow(grade, isNew = gradeKey(termCode, course.code, grade.type) in highlighted)
@@ -240,7 +240,7 @@ private fun ClassGradeRow(grade: ClassGrade, isNew: Boolean) {
     val res = LocalContext.current.resources
     Row(verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(8.dp).clip(CircleShape).background(lessonTypeColor(grade.type)))
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(Spacing.sm))
         Text(
             lessonTypeLabel(grade.type, res),
             Modifier.weight(1f),
@@ -249,7 +249,7 @@ private fun ClassGradeRow(grade: ClassGrade, isNew: Boolean) {
         )
         if (isNew) {
             NewBadge()
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(Spacing.sm))
         }
         val current = grade.current
         if (current == null) {
@@ -278,7 +278,7 @@ private fun NewBadge() {
     Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(50)) {
         Text(
             stringResource(R.string.grades_new_badge),
-            Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+            Modifier.padding(horizontal = Spacing.sm, vertical = Spacing.xxs),
             style = MaterialTheme.typography.labelSmall,
         )
     }
@@ -286,26 +286,5 @@ private fun NewBadge() {
 
 /** "New grades: N" banner above the schedule, styled like [ChangesBanner]. */
 @Composable
-fun NewGradesBanner(count: Int, onClick: () -> Unit) {
-    val colors = MaterialTheme.colorScheme
-    Surface(
-        onClick = onClick,
-        color = colors.secondaryContainer,
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-    ) {
-        Row(Modifier.padding(horizontal = 14.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Outlined.Grade, null, tint = colors.onSecondaryContainer)
-            Spacer(Modifier.width(10.dp))
-            Text(
-                stringResource(R.string.grades_new_banner, count),
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.labelLarge,
-                color = colors.onSecondaryContainer,
-            )
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = colors.onSecondaryContainer)
-        }
-    }
-}
+fun NewGradesBanner(count: Int, onClick: () -> Unit) =
+    InfoBanner(Icons.Outlined.Grade, stringResource(R.string.grades_new_banner, count), onClick)

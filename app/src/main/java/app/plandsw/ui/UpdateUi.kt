@@ -18,7 +18,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -41,12 +40,12 @@ fun UpdateBanner(state: UpdateState, onInstall: () -> Unit, onHide: () -> Unit) 
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
     ) {
-        Column(Modifier.padding(start = 14.dp, end = 4.dp, top = 4.dp, bottom = 12.dp)) {
+        Column(Modifier.padding(start = Spacing.md, end = Spacing.xs, top = Spacing.xs, bottom = Spacing.md)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Outlined.SystemUpdate, null)
-                Spacer(Modifier.width(10.dp))
+                Spacer(Modifier.width(Spacing.sm))
                 Text(
                     stringResource(R.string.update_available, update.version),
                     modifier = Modifier.weight(1f),
@@ -59,14 +58,14 @@ fun UpdateBanner(state: UpdateState, onInstall: () -> Unit, onHide: () -> Unit) 
             }
             val progress = state.progress
             if (progress != null) {
-                LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth().padding(end = 10.dp, top = 8.dp))
+                ProgressBar(progress = { progress }, modifier = Modifier.fillMaxWidth().padding(end = Spacing.sm, top = Spacing.sm))
                 Text(stringResource(R.string.update_downloading), style = MaterialTheme.typography.labelMedium)
             } else {
                 Row(
                     Modifier
                         .fillMaxWidth()
-                        .padding(end = 10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                        .padding(end = Spacing.sm),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.sm, Alignment.End),
                 ) {
                     TextButton(onClick = { notesOpen = true }) { Text(stringResource(R.string.update_whats_new)) }
                     Button(onClick = onInstall) { Text(stringResource(R.string.update_install)) }

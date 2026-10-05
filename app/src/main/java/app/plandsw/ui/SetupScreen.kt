@@ -37,7 +37,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -112,7 +111,7 @@ fun SetupScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            Column(Modifier.padding(horizontal = 20.dp)) {
+            Column(Modifier.padding(horizontal = Spacing.lg)) {
                 Text(
                     stringResource(R.string.setup_step, info.number, if (state.step == SetupStep.TOK) 5 else 4),
                     style = MaterialTheme.typography.labelLarge,
@@ -123,7 +122,7 @@ fun SetupScreen(
                 val chosen = listOfNotNull(state.faculty, state.kierunek, state.intake, state.mode)
                     .take(info.number - 1)
                 if (chosen.isNotEmpty()) {
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(Spacing.sm))
                     Text(
                         chosen.joinToString("  ›  ") { it.name },
                         style = MaterialTheme.typography.bodySmall,
@@ -131,9 +130,9 @@ fun SetupScreen(
                     )
                 }
             }
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Spacing.sm))
             Box(Modifier.fillMaxWidth().height(4.dp)) {
-                if (state.loading && state.options.isNotEmpty()) LinearProgressIndicator(Modifier.fillMaxWidth())
+                if (state.loading && state.options.isNotEmpty()) LoadingBar(Modifier.fillMaxWidth())
             }
             AnimatedContent(
                 targetState = state.step,
@@ -167,7 +166,7 @@ private fun OptionList(step: SetupStep, options: List<Option>, busy: Boolean, on
         val words = filter.fold().split(' ').filter { it.isNotEmpty() }
         options.filter { o -> val name = o.name.fold(); words.all { it in name } }
     }
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+    LazyColumn(contentPadding = PaddingValues(bottom = Spacing.xl)) {
         if (showFilter) {
             item {
                 OutlinedTextField(
@@ -175,7 +174,7 @@ private fun OptionList(step: SetupStep, options: List<Option>, busy: Boolean, on
                     onValueChange = { filter = it },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = Spacing.lg, vertical = Spacing.sm),
                     singleLine = true,
                     leadingIcon = { Icon(Icons.Outlined.Search, null) },
                     placeholder = { Text(stringResource(R.string.filter_hint)) },
@@ -189,13 +188,13 @@ private fun OptionList(step: SetupStep, options: List<Option>, busy: Boolean, on
                 trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
                 modifier = Modifier.clickable(enabled = !busy) { onPick(option) },
             )
-            HorizontalDivider(Modifier.padding(start = 16.dp))
+            HorizontalDivider(Modifier.padding(start = Spacing.lg))
         }
         if (shown.isEmpty()) {
             item {
                 Text(
                     stringResource(R.string.nothing_found),
-                    modifier = Modifier.fillMaxWidth().padding(32.dp),
+                    modifier = Modifier.fillMaxWidth().padding(Spacing.xxl),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -209,12 +208,12 @@ private fun ErrorBlock(message: String, onRetry: () -> Unit, onBack: (() -> Unit
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(32.dp),
+            .padding(Spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.lg),
     ) {
         Text(message, textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
             if (onBack != null) TextButton(onClick = onBack) { Text(stringResource(R.string.setup_change_choice)) }
             Button(onClick = onRetry) { Text(stringResource(R.string.action_retry)) }
         }
@@ -238,9 +237,9 @@ fun GroupPickerSheet(
             Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(horizontal = Spacing.xl)
+                .padding(bottom = Spacing.lg),
+            verticalArrangement = Arrangement.spacedBy(Spacing.md),
         ) {
             Text(stringResource(R.string.groups_title), style = MaterialTheme.typography.headlineSmall)
             Text(
@@ -250,7 +249,7 @@ fun GroupPickerSheet(
             )
             groups.groupBy { groupCategory(it.short) }.toSortedMap().forEach { (category, list) ->
                 Text(stringResource(category.title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     list.forEach { g ->
                         val checked = g.name in picked
                         FilterChip(
@@ -272,7 +271,7 @@ fun GroupPickerSheet(
             }
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md, Alignment.End),
             ) {
                 TextButton(onClick = { picked = groups.map { it.name } }) { Text(stringResource(R.string.action_all)) }
                 Button(onClick = { onDone(picked.toSet()) }, enabled = picked.isNotEmpty()) {

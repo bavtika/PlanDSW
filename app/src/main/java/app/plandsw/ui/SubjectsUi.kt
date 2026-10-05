@@ -21,10 +21,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,20 +69,16 @@ private fun nextText(lesson: Lesson): String {
 @Composable
 fun SubjectList(subjects: List<SubjectSummary>, onOpen: (SubjectSummary) -> Unit) {
     if (subjects.isEmpty()) {
-        Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
-            Text(
-                stringResource(R.string.subjects_empty),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            EmptyState(icon = Icons.AutoMirrored.Outlined.MenuBook, title = stringResource(R.string.subjects_empty))
         }
         return
     }
     val res = LocalContext.current.resources
     LazyColumn(
         Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         items(subjects, key = { it.name }) { s ->
             Card(
@@ -89,7 +86,7 @@ fun SubjectList(subjects: List<SubjectSummary>, onOpen: (SubjectSummary) -> Unit
                 modifier = Modifier.fillMaxWidth().alpha(if (s.finished) 0.6f else 1f),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             ) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(Modifier.padding(Spacing.lg), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                     Row(verticalAlignment = Alignment.Top) {
                         Text(
                             s.name,
@@ -98,7 +95,7 @@ fun SubjectList(subjects: List<SubjectSummary>, onOpen: (SubjectSummary) -> Unit
                             maxLines = 3,
                             overflow = TextOverflow.Ellipsis,
                         )
-                        Spacer(Modifier.width(12.dp))
+                        Spacer(Modifier.width(Spacing.md))
                         Text(
                             "${s.done}/${s.lessons.size}",
                             style = MaterialTheme.typography.labelLarge,
@@ -106,13 +103,13 @@ fun SubjectList(subjects: List<SubjectSummary>, onOpen: (SubjectSummary) -> Unit
                         )
                     }
                     if (s.types.isNotEmpty()) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             s.types.forEach { TypeTag(it, lessonTypeLabel(it, res)) }
                         }
                     }
-                    LinearProgressIndicator(
+                    ProgressBar(
                         progress = { s.done.toFloat() / s.lessons.size },
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = Spacing.xxs),
                     )
                     Text(
                         s.next?.let { nextText(it) } ?: stringResource(R.string.subject_finished),
@@ -129,7 +126,7 @@ fun SubjectList(subjects: List<SubjectSummary>, onOpen: (SubjectSummary) -> Unit
 private fun TypeTag(type: String, label: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(8.dp).clip(CircleShape).background(lessonTypeColor(type)))
-        Spacer(Modifier.width(5.dp))
+        Spacer(Modifier.width(Spacing.xs))
         Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
@@ -173,11 +170,11 @@ fun SubjectDetail(
     LazyColumn(
         Modifier.fillMaxSize(),
         state = listState,
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         item(key = "header") {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Text(
                     pluralStringResource(R.plurals.lessons_count, subject.lessons.size, subject.lessons.size) +
                         " · " + formatDuration(subject.totalMinutes, res) + " · " +
@@ -189,7 +186,7 @@ fun SubjectDetail(
                     Text(subject.teachers.joinToString(", "), style = MaterialTheme.typography.bodyMedium)
                 }
                 if (subject.types.size > 1) {
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                         item {
                             FilterChip(
                                 selected = typeFilter == null,
@@ -214,7 +211,7 @@ fun SubjectDetail(
                     item.month.format(monthFmt).replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                    modifier = Modifier.padding(top = Spacing.sm, bottom = Spacing.xxs),
                 )
                 is DetailItem.Entry -> OccurrenceRow(
                     lesson = item.lesson,
@@ -233,16 +230,15 @@ private fun OccurrenceRow(lesson: Lesson, viewer: TargetKind, past: Boolean, isN
     val res = LocalContext.current.resources
     val locale = appLocale()
     val colors = MaterialTheme.colorScheme
-    val accent = lessonTypeColor(lesson.type)
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
+            .clip(RoundedCornerShape(Radii.md))
             .background(colors.surfaceContainerLow)
-            .then(if (isNext) Modifier.border(2.dp, colors.primary, RoundedCornerShape(14.dp)) else Modifier)
+            .then(if (isNext) Modifier.border(Stroke, colors.primary, RoundedCornerShape(Radii.md)) else Modifier)
             .clickable(onClick = onClick)
             .alpha(if (past) 0.5f else 1f)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.width(48.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -257,17 +253,17 @@ private fun OccurrenceRow(lesson: Lesson, viewer: TargetKind, past: Boolean, isN
                 color = colors.onSurfaceVariant,
             )
         }
-        Spacer(Modifier.width(12.dp))
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Spacer(Modifier.width(Spacing.md))
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     "${lesson.startAt.format(timeFmt)} – ${lesson.endAt.format(timeFmt)}",
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.titleSmall.tabular(),
                 )
                 val label = lessonTypeLabel(lesson.type, res)
                 if (label.isNotEmpty()) {
-                    Spacer(Modifier.width(8.dp))
-                    Text(label, style = MaterialTheme.typography.labelMedium, color = accent, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.width(Spacing.sm))
+                    TypeChip(lesson.type, label)
                 }
             }
             val place = when {

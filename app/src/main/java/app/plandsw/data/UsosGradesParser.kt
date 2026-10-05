@@ -55,7 +55,8 @@ object UsosGradesParser {
         val type = link?.attr("title")?.trim()?.ifEmpty { null } ?: link?.text()?.trim().orEmpty()
         val spans = div.select("span").filterNot { it.hasClass("note") }
         val attempts = spans.map { it.text().trim().removeSurrounding("(", ")") }.filter { it.isNotEmpty() }
-        val failed = spans.lastOrNull()?.attr("style")?.replace(" ", "")?.contains("color:#d00") == true
+        // USOS marks a failed attempt with this inline colour; we match its markup, it is not a UI colour.
+        val failed = spans.lastOrNull()?.attr("style")?.replace(" ", "")?.contains("color:#d00") == true // ds-allow-hardcode
         return ClassGrade(type, attempts, failed)
     }
 }

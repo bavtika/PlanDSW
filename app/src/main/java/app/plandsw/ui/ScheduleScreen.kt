@@ -30,9 +30,11 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.FilterList
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.EventAvailable
+import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.MeetingRoom
 import androidx.compose.material.icons.outlined.Person
@@ -78,8 +80,6 @@ import app.plandsw.data.Target
 import app.plandsw.data.TargetKind
 import app.plandsw.data.WARSAW
 import app.plandsw.data.summarizeSubjects
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.Instant
@@ -89,6 +89,8 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAdjusters
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 fun kindIcon(kind: TargetKind) = when (kind) {
     TargetKind.GROUP -> Icons.Outlined.Groups
@@ -225,7 +227,7 @@ fun ScheduleScreen(
                     Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(32.dp),
+                        .padding(Spacing.xxl),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
@@ -235,7 +237,7 @@ fun ScheduleScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     if (!state.loading && state.error != null) {
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Spacing.md))
                         Button(onClick = onRefresh) { Text(stringResource(R.string.action_retry)) }
                     }
                 }
@@ -371,7 +373,7 @@ private fun WeekStrip(
     val locale = appLocale()
     val monday = selected.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
     val monthFmt = remember(locale) { DateTimeFormatter.ofPattern("LLLL yyyy", locale) }
-    Column(Modifier.padding(horizontal = 8.dp)) {
+    Column(Modifier.padding(horizontal = Spacing.sm)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { onSelect(selected.minusWeeks(1)) }) {
                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, stringResource(R.string.week_prev))
@@ -384,8 +386,8 @@ private fun WeekStrip(
             )
             if (selected != today) {
                 TextButton(onClick = { onSelect(today) }) {
-                    Icon(Icons.Outlined.EventAvailable, null, Modifier.size(18.dp))
-                    Spacer(Modifier.size(4.dp))
+                    Icon(Icons.Outlined.EventAvailable, null, Modifier.size(IconSize.md))
+                    Spacer(Modifier.size(Spacing.xs))
                     Text(stringResource(R.string.today))
                 }
             }
@@ -393,7 +395,7 @@ private fun WeekStrip(
                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, stringResource(R.string.week_next))
             }
         }
-        Row(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+        Row(Modifier.fillMaxWidth().padding(bottom = Spacing.sm)) {
             for (i in 0..6) {
                 val day = monday.plusDays(i.toLong())
                 val isSelected = day == selected
@@ -402,15 +404,15 @@ private fun WeekStrip(
                 Column(
                     Modifier
                         .weight(1f)
-                        .padding(horizontal = 2.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .padding(horizontal = Spacing.xxs)
+                        .clip(RoundedCornerShape(Radii.lg))
                         .background(if (isSelected) colors.primary else colors.surface)
                         .then(
-                            if (isToday && !isSelected) Modifier.border(1.5.dp, colors.primary, RoundedCornerShape(16.dp))
+                            if (isToday && !isSelected) Modifier.border(Stroke, colors.primary, RoundedCornerShape(Radii.lg))
                             else Modifier
                         )
                         .clickable { onSelect(day) }
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = Spacing.sm),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     val fg = if (isSelected) colors.onPrimary else colors.onSurface
@@ -427,7 +429,7 @@ private fun WeekStrip(
                     )
                     Box(
                         Modifier
-                            .padding(top = 3.dp)
+                            .padding(top = Spacing.xxs)
                             .size(5.dp)
                             .clip(CircleShape)
                             .background(
@@ -460,8 +462,8 @@ private fun DayPage(
     }
     LazyColumn(
         Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        contentPadding = PaddingValues(Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm),
     ) {
         item {
             Row(verticalAlignment = Alignment.Bottom) {
@@ -483,20 +485,11 @@ private fun DayPage(
         }
         if (lessons.isEmpty()) {
             item {
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 64.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(if (outsideSemester) "📚" else "🎉", style = MaterialTheme.typography.displayMedium)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        stringResource(if (outsideSemester) R.string.outside_semester else R.string.no_classes),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                EmptyState(
+                    icon = if (outsideSemester) Icons.Outlined.DateRange else Icons.Outlined.EventAvailable,
+                    title = stringResource(if (outsideSemester) R.string.outside_semester else R.string.no_classes),
+                    modifier = Modifier.padding(top = Spacing.xxxl),
+                )
             }
         }
         itemsIndexed(lessons, key = { i, l -> "$i${l.start}${l.subject}" }) { i, lesson ->
@@ -513,29 +506,24 @@ private fun DayPage(
 @Composable
 private fun WelcomeScreen(onSetup: () -> Unit) {
     Scaffold { padding ->
-        Column(
+        Box(
             Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+                .padding(padding),
+            contentAlignment = Alignment.Center,
         ) {
-            Text("📅", style = MaterialTheme.typography.displayLarge)
-            Spacer(Modifier.height(16.dp))
-            Text("Plan DSW", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(8.dp))
-            Text(
-                stringResource(R.string.welcome_text),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            EmptyState(
+                icon = Icons.Outlined.CalendarMonth,
+                title = stringResource(R.string.app_name),
+                body = stringResource(R.string.welcome_text),
+                action = {
+                    Button(onClick = onSetup) {
+                        Icon(Icons.Outlined.School, null, Modifier.size(IconSize.md))
+                        Spacer(Modifier.size(Spacing.sm))
+                        Text(stringResource(R.string.welcome_button))
+                    }
+                },
             )
-            Spacer(Modifier.height(24.dp))
-            Button(onClick = onSetup) {
-                Icon(Icons.Outlined.School, null)
-                Spacer(Modifier.size(8.dp))
-                Text(stringResource(R.string.welcome_button))
-            }
         }
     }
 }

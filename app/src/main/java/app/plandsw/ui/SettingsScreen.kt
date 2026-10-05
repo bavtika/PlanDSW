@@ -172,7 +172,7 @@ private fun ChoiceDialog(
                         // ListItem has its own background; inside a dialog it must take the dialog's colour.
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
+                            .clip(RoundedCornerShape(Radii.md))
                             .clickable { onPick(key) },
                     )
                 }

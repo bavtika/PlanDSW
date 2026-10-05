@@ -35,29 +35,8 @@ import app.plandsw.data.ScheduleChange
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ChangesBanner(count: Int, onClick: () -> Unit) {
-    val colors = MaterialTheme.colorScheme
-    Surface(
-        onClick = onClick,
-        color = colors.tertiaryContainer,
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-    ) {
-        Row(Modifier.padding(horizontal = 14.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Outlined.NotificationsActive, null, tint = colors.onTertiaryContainer)
-            Spacer(Modifier.width(10.dp))
-            Text(
-                stringResource(R.string.changes_banner, count),
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.labelLarge,
-                color = colors.onTertiaryContainer,
-            )
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = colors.onTertiaryContainer)
-        }
-    }
-}
+fun ChangesBanner(count: Int, onClick: () -> Unit) =
+    InfoBanner(Icons.Outlined.NotificationsActive, stringResource(R.string.changes_banner, count), onClick)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,9 +45,9 @@ fun ChangesSheet(changes: List<ScheduleChange>, onDismiss: () -> Unit) {
         Text(
             stringResource(R.string.changes_title),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(horizontal = 24.dp),
+            modifier = Modifier.padding(horizontal = Spacing.xl),
         )
-        LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+        LazyColumn(contentPadding = PaddingValues(bottom = Spacing.xl)) {
             items(changes) { change ->
                 ListItem(
                     leadingContent = { Icon(changeIcon(change.kind), null) },

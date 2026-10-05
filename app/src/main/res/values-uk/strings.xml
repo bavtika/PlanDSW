@@ -24,13 +24,13 @@
     <string name="setup_kierunek_hint">Оберіть напрям</string>
     <string name="setup_intake_hint">Семестр, у якому ви почали навчання</string>
     <string name="setup_mode_hint">Форма навчання</string>
-    <string name="setup_tok_hint">Знайдено кілька потоків — оберіть свій</string>
+    <string name="setup_tok_hint">Знайдено кілька потоків. Оберіть свій.</string>
     <string name="mode_part_time">заочна форма, зазвичай у вихідні</string>
     <string name="mode_full_time">денна форма</string>
     <string name="setup_change_choice">Змінити вибір</string>
 
     <string name="groups_title">Мої групи</string>
-    <string name="groups_first_time">Позначте свої групи — наприклад, Cw2S, Lab2AS і ANG2S. Пари інших груп буде приховано. Змінити можна кнопкою фільтра.</string>
+    <string name="groups_first_time">Позначте свої групи, наприклад Cw2S, Lab2AS і ANG2S. Пари інших груп буде приховано. Змінити можна кнопкою фільтра.</string>
     <string name="groups_subtitle">Пари яких груп показувати</string>
     <string name="group_cat_lecture">Лекції</string>
     <string name="group_cat_exercise">Практичні</string>
@@ -97,7 +97,7 @@
         <item quantity="many">%d занять</item>
         <item quantity="other">%d заняття</item>
     </plurals>
-    <string name="welcome_text">Розклад занять Uniwersytetu DSW. Оберіть факультет і напрям — розклад збережеться й буде доступний без інтернету.</string>
+    <string name="welcome_text">Розклад занять Uniwersytetu DSW. Оберіть факультет і напрям. Розклад збережеться й буде доступний без інтернету.</string>
     <string name="welcome_button">Обрати напрям</string>
 
     <string name="search_title">Викладач або аудиторія</string>
@@ -146,7 +146,7 @@
     <string name="usos_logout">Вийти з USOS</string>
     <string name="usos_login_button">Увійти до USOS</string>
     <string name="grades_intro_title">Оцінки з USOS</string>
-    <string name="grades_intro_text">Увійдіть обліковим записом університету (Microsoft). Вхід відбувається на сайті університету: застосунок не бачить і не зберігає пароль, а оцінки залишаються лише на телефоні.\n\nКоли Microsoft запитає «Nie wylogowywać?» («Не виходити з системи?»), виберіть «Tak» — тоді застосунок сам подовжить вхід, коли сесія USOS завершиться.</string>
+    <string name="grades_intro_text">Увійдіть обліковим записом університету (Microsoft). Вхід відбувається на сайті університету: застосунок не бачить і не зберігає пароль, а оцінки залишаються лише на телефоні.\n\nКоли Microsoft запитає «Nie wylogowywać?» («Не виходити з системи?»), виберіть «Tak». Тоді застосунок сам подовжить вхід, коли сесія USOS завершиться.</string>
     <string name="grades_loading">Завантажуємо оцінки…</string>
     <string name="grades_empty">У USOS поки немає оцінок</string>
     <string name="grades_load_failed">Не вдалося завантажити оцінки. Потягніть униз, щоб повторити.</string>

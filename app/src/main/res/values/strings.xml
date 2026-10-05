@@ -29,14 +29,14 @@
     <string name="setup_kierunek_hint">Choose your field of study</string>
     <string name="setup_intake_hint">The semester in which you started your studies</string>
     <string name="setup_mode_hint">Study mode</string>
-    <string name="setup_tok_hint">Several study programmes found — choose yours</string>
+    <string name="setup_tok_hint">Several study programmes found. Choose yours.</string>
     <string name="mode_part_time">part-time, usually at weekends</string>
     <string name="mode_full_time">full-time</string>
     <string name="setup_change_choice">Change selection</string>
 
     <!-- Groups -->
     <string name="groups_title">My groups</string>
-    <string name="groups_first_time">Select your groups — for example Cw2S, Lab2AS and ANG2S. Classes of other groups will be hidden. You can change this later with the filter button.</string>
+    <string name="groups_first_time">Select your groups, for example Cw2S, Lab2AS and ANG2S. Classes of other groups will be hidden. You can change this later with the filter button.</string>
     <string name="groups_subtitle">Show classes of these groups</string>
     <string name="group_cat_lecture">Lectures</string>
     <string name="group_cat_exercise">Exercises</string>
@@ -104,7 +104,7 @@
         <item quantity="one">%d class</item>
         <item quantity="other">%d classes</item>
     </plurals>
-    <string name="welcome_text">Class schedule of DSW University. Choose your faculty and field of study — the schedule is saved and works offline.</string>
+    <string name="welcome_text">Class schedule of DSW University. Choose your faculty and field of study. The schedule is saved and works offline.</string>
     <string name="welcome_button">Choose field of study</string>
 
     <!-- Search -->
@@ -154,7 +154,7 @@
     <string name="usos_logout">Log out of USOS</string>
     <string name="usos_login_button">Sign in to USOS</string>
     <string name="grades_intro_title">Grades from USOS</string>
-    <string name="grades_intro_text">Sign in with your university account (Microsoft). You sign in on the university\'s website: the app never sees or stores your password, and your grades stay only on this phone.\n\nWhen Microsoft asks “Nie wylogowywać?” (Stay signed in?), choose “Tak” (Yes) — then the app will renew the sign-in by itself when the USOS session expires.</string>
+    <string name="grades_intro_text">Sign in with your university account (Microsoft). You sign in on the university\'s website: the app never sees or stores your password, and your grades stay only on this phone.\n\nWhen Microsoft asks “Nie wylogowywać?” (Stay signed in?), choose “Tak” (Yes). Then the app will renew the sign-in by itself when the USOS session expires.</string>
     <string name="grades_loading">Loading grades…</string>
     <string name="grades_empty">No grades in USOS yet</string>
     <string name="grades_load_failed">Couldn\'t load grades. Pull down to try again.</string>
