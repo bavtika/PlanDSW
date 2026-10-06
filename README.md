@@ -17,7 +17,7 @@ An Android app for the class schedule of DSW University (harmonogramy.ideis.pl).
 - Home screen widget; while it is added, the schedule refreshes in the background every 6 hours.
 - Teacher and room schedules: the full teacher list (your teachers first) with an instant filter.
 - Works offline, dark theme.
-- Grades from USOS in their own tab, with a badge for new grades (sign in with the university account).
+- Grades from USOS in their own tab, as two lists: test results (Sprawdziany) and semester grades, with a badge for new results (sign in with the university account).
 
 ## How it works
 
@@ -46,8 +46,12 @@ The USOS API (`usosapps.ideis.pl`) is not used: it requires a consumer key and r
 - Parsing: `UsosGradesParser`: `usos-frame#oceny` → `usos-frame-section` (term) → subject rows;
   the term code (`cdyd_kod`) is taken from the "szczegóły" dialog URL. A markup sample with made-up data is in
   `app/src/test/resources/usos/oceny.html`.
+- Tests: `UsosTestsParser` reads the "Sprawdziany" index (`dla_stud/studia/sprawdziany/index`, one `usos-frame` per term)
+  and each subject's tree (`sprawdziany/pokaz&wez_id=N`: `div#drzewo`, nested `div#childrenofN` levels of `table.grey`
+  nodes with points, grades, hidden results and comments). Subjects are fetched 4 at a time; markup samples with
+  made-up data are in `app/src/test/resources/usos/sprawdziany.html` and `sprawdzian.html`.
 - New grades: `GradesDiff` between the previous and the new cache (`filesDir/grades.json`), checked on launch
-  when the cache is older than an hour, and on the grades tab.
+  when the cache is older than an hour, and on the grades tab. Test results are compared by their path in the tree.
 - WebView cookies (`app_webview/`) and `grades.json` are excluded from Android backups
   (`res/xml/data_extraction_rules.xml`, `res/xml/backup_rules.xml`).
 

@@ -3,6 +3,7 @@ package app.plandsw.data
 import android.content.Context
 import android.webkit.CookieManager
 import android.webkit.WebSettings
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -50,8 +51,22 @@ class GradesRepository(context: Context) {
         if (terms.isEmpty() && !old?.terms.isNullOrEmpty()) {
             throw UnexpectedResponseException("Empty USOS grades while cache has grades")
         }
-        val fresh = CachedGrades(System.currentTimeMillis(), terms)
-        val changes = GradesDiff.changes(old?.terms, terms)
+        // Tests are a second, independent section: if it fails, keep the cached tests and still update grades.
+        val tests = try {
+            api.fetchTests()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            null
+        }
+        val fresh = CachedGrades(
+            fetchedAt = System.currentTimeMillis(),
+            terms = terms,
+            tests = tests ?: old?.tests.orEmpty(),
+            testsLoaded = tests != null || old?.testsLoaded == true,
+        )
+        val changes = GradesDiff.changes(old?.terms, terms) +
+            if (tests != null) GradesDiff.testChanges(old?.takeIf { it.testsLoaded }?.tests, tests) else emptyList()
         withContext(Dispatchers.IO) { file.writeText(json.encodeToString(fresh)) }
         if (changes.isNotEmpty()) {
             val keys = changes.map { it.key }.toSet()

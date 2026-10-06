@@ -167,4 +167,10 @@
     <string name="search_all_teachers">Wszyscy prowadzący</string>
     <string name="search_favorites">Ulubione</string>
     <string name="search_all_rooms">Wszystkie sale</string>
+    <string name="grades_tab_tests">Sprawdziany</string>
+    <string name="grades_tab_semester">Oceny semestralne</string>
+    <string name="tests_empty">W USOS nie ma jeszcze sprawdzianów</string>
+    <string name="tests_hidden">ukryty</string>
+    <string name="tests_expand">Pokaż wszystko</string>
+    <string name="tests_collapse">Zwiń</string>
 </resources>

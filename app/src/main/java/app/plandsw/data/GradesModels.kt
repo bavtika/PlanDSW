@@ -33,7 +33,48 @@ data class TermGrades(
 )
 
 @Serializable
-data class CachedGrades(val fetchedAt: Long, val terms: List<TermGrades>)
+data class CachedGrades(
+    val fetchedAt: Long,
+    val terms: List<TermGrades>,
+    /** Results from the "Sprawdziany" section, per semester. */
+    val tests: List<TermTests> = emptyList(),
+    /** False in caches written before tests were loaded: then no test result counts as new. */
+    val testsLoaded: Boolean = false,
+)
+
+/** One node of a subject's test tree: a points item ("Kolokwium nr 1") or a grade ("Ocena z wykładu - I termin"). */
+@Serializable
+data class TestNode(
+    val name: String,
+    /** True for a grade node ("- ocena" on the site), false for points. */
+    val isGrade: Boolean,
+    /** "17.75" points or "3,5" grade; null when nothing is entered yet. */
+    val value: String? = null,
+    /** Maximum points, e.g. "63"; null for grades or when the site gives none. */
+    val max: String? = null,
+    /** The teacher has hidden the result ("wynik jest ukryty"). */
+    val hidden: Boolean = false,
+    /** Teacher's comment, if any. */
+    val comment: String = "",
+    val children: List<TestNode> = emptyList(),
+)
+
+@Serializable
+data class TestCourse(
+    /** USOS id of the test tree (wez_id). */
+    val id: Int,
+    val code: String,
+    val name: String,
+    val nodes: List<TestNode>,
+)
+
+@Serializable
+data class TermTests(
+    /** "2025/26L"; the title is used when the site gives no code. */
+    val code: String,
+    val title: String,
+    val courses: List<TestCourse>,
+)
 
 fun gradeKey(termCode: String, courseCode: String, type: String) = "$termCode|$courseCode|$type"
 

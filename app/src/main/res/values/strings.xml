@@ -175,4 +175,10 @@
     <string name="search_all_teachers">All teachers</string>
     <string name="search_favorites">Favourites</string>
     <string name="search_all_rooms">All rooms</string>
+    <string name="grades_tab_tests">Tests</string>
+    <string name="grades_tab_semester">Semester grades</string>
+    <string name="tests_empty">No tests in USOS yet</string>
+    <string name="tests_hidden">hidden</string>
+    <string name="tests_expand">Show all</string>
+    <string name="tests_collapse">Show less</string>
 </resources>

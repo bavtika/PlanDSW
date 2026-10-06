@@ -76,6 +76,7 @@ fun SearchScreen(
                             selected = state.kind == kind,
                             onClick = { onKind(kind) },
                             shape = SegmentedButtonDefaults.itemShape(i, kinds.size),
+                            colors = segmentedColors(),
                             icon = {},
                         ) {
                             Text(

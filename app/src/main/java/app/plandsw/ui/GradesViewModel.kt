@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.plandsw.data.GradeChange
 import app.plandsw.data.GradesRepository
 import app.plandsw.data.TermGrades
+import app.plandsw.data.TermTests
 import app.plandsw.data.UsosLoginRequired
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -19,6 +20,8 @@ import kotlinx.coroutines.launch
 data class GradesState(
     val loggedIn: Boolean = false,
     val terms: List<TermGrades> = emptyList(),
+    /** Results from the "Sprawdziany" section. */
+    val tests: List<TermTests> = emptyList(),
     val fetchedAt: Long? = null,
     val loading: Boolean = false,
     @StringRes val error: Int? = null,
@@ -40,7 +43,7 @@ class GradesViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            repo.cached()?.let { c -> _state.update { it.copy(terms = c.terms, fetchedAt = c.fetchedAt) } }
+            repo.cached()?.let { c -> _state.update { it.copy(terms = c.terms, tests = c.tests, fetchedAt = c.fetchedAt) } }
             // Quiet check for new grades on startup, for the banner on the main screen.
             if (repo.loggedIn && stale()) load(quiet = true)
         }
@@ -85,7 +88,7 @@ class GradesViewModel(app: Application) : AndroidViewModel(app) {
             try {
                 val fresh = repo.refresh()
                 _state.update {
-                    it.copy(terms = fresh.terms, fetchedAt = fresh.fetchedAt, loading = false, loginRequired = false, unseen = repo.unseen)
+                    it.copy(terms = fresh.terms, tests = fresh.tests, fetchedAt = fresh.fetchedAt, loading = false, loginRequired = false, unseen = repo.unseen)
                 }
             } catch (e: CancellationException) {
                 throw e
