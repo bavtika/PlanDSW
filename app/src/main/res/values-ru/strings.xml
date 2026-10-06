@@ -173,4 +173,8 @@
     <string name="tests_hidden">скрыто</string>
     <string name="tests_expand">Показать всё</string>
     <string name="tests_collapse">Свернуть</string>
+    <string name="tests_final">Итоговая оценка</string>
+    <string name="tests_grade">Оценка</string>
+    <string name="tests_no_results">Результатов пока нет</string>
+    <string name="tests_not_entered">нет</string>
 </resources>

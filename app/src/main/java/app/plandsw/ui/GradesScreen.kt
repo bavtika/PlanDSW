@@ -24,8 +24,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.Logout
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Grade
 import androidx.compose.material3.Button
@@ -68,10 +66,8 @@ import androidx.compose.ui.unit.dp
 import app.plandsw.R
 import app.plandsw.data.ClassGrade
 import app.plandsw.data.CourseGrades
-import app.plandsw.data.GradesDiff
 import app.plandsw.data.TermGrades
 import app.plandsw.data.TestCourse
-import app.plandsw.data.TestNode
 import app.plandsw.data.gradeKey
 
 /** Semester from a USOS code: "2025/26L" → summer 2025/26. */
@@ -244,109 +240,6 @@ private fun LazyListScope.testsList(state: GradesState) {
     }
 }
 
-/** A subject's test tree. Collapsed it shows the top level (totals and final grades), expanded every item. */
-@Composable
-private fun TestCourseCard(termCode: String, course: TestCourse, highlighted: Set<String>) {
-    var expanded by rememberSaveable(course.id) { mutableStateOf(false) }
-    val rows = remember(course, expanded) { flatten(course.nodes, "", 0, expanded) }
-    val hasMore = course.nodes.any { it.children.isNotEmpty() }
-    Card(
-        onClick = { expanded = !expanded },
-        enabled = hasMore,
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Radii.lg),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            disabledContentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-    ) {
-        Column(Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.md), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(course.name, Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-                if (hasMore) {
-                    Icon(
-                        if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                        stringResource(if (expanded) R.string.tests_collapse else R.string.tests_expand),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-            rows.forEach { row ->
-                TestRow(row, isNew = gradeKey(termCode, course.code, row.key) in highlighted)
-            }
-        }
-    }
-}
-
-private data class TestRowData(val node: TestNode, val depth: Int, val key: String)
-
-/** Tree to rows; [all] = false keeps only the top level. Keys match GradesDiff paths, for "new" badges. */
-private fun flatten(nodes: List<TestNode>, prefix: String, depth: Int, all: Boolean): List<TestRowData> =
-    nodes.flatMap { n ->
-        val row = TestRowData(n, depth, GradesDiff.TEST_PREFIX + prefix + n.name)
-        listOf(row) + if (all) flatten(n.children, prefix + n.name + "/", depth + 1, true) else emptyList()
-    }
-
-/** "63.00" -> "63", "17.50" -> "17.5": the site pads points with zeros. */
-internal fun trimPoints(value: String): String =
-    if (value.contains('.')) value.trimEnd('0').trimEnd('.') else value
-
-/** A failing grade: 2 in the Polish scale, or "nzal" (not passed). */
-internal fun isFailingGrade(value: String): Boolean {
-    val v = value.trim().lowercase()
-    return v == "2" || v == "2,0" || v == "2.0" || v.startsWith("nzal") || v == "nk"
-}
-
-@Composable
-private fun TestRow(row: TestRowData, isNew: Boolean) {
-    val node = row.node
-    val colors = MaterialTheme.colorScheme
-    Column(Modifier.padding(start = Spacing.lg * row.depth)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                node.name,
-                Modifier.weight(1f),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (node.children.isNotEmpty() || node.isGrade) FontWeight.SemiBold else FontWeight.Normal,
-                color = if (row.depth == 0) colors.onSurface else colors.onSurfaceVariant,
-            )
-            if (isNew) {
-                NewBadge()
-                Spacer(Modifier.width(Spacing.sm))
-            }
-            val value = node.value
-            when {
-                node.hidden -> Text(stringResource(R.string.tests_hidden), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                value == null -> Text(stringResource(R.string.grades_no_grade), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-                node.isGrade -> Text(
-                    value,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = if (isFailingGrade(value)) colors.error else colors.onSurface,
-                )
-                else -> Row(verticalAlignment = Alignment.Bottom) {
-                    Text(
-                        trimPoints(value),
-                        style = MaterialTheme.typography.titleSmall.tabular(),
-                        fontWeight = FontWeight.Bold,
-                    )
-                    node.max?.let { max ->
-                        Text(
-                            " / " + trimPoints(max),
-                            style = MaterialTheme.typography.bodySmall.tabular(),
-                            color = colors.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-        }
-        if (node.comment.isNotBlank()) {
-            Text(node.comment, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-        }
-    }
-}
-
 @Composable
 private fun LoginIntro(onLogin: () -> Unit, modifier: Modifier) {
     Column(
@@ -444,7 +337,7 @@ private fun ClassGradeRow(grade: ClassGrade, isNew: Boolean) {
 }
 
 @Composable
-private fun NewBadge() {
+internal fun NewBadge() {
     Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(50)) {
         Text(
             stringResource(R.string.grades_new_badge),

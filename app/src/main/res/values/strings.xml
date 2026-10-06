@@ -181,4 +181,8 @@
     <string name="tests_hidden">hidden</string>
     <string name="tests_expand">Show all</string>
     <string name="tests_collapse">Show less</string>
+    <string name="tests_final">Final grade</string>
+    <string name="tests_grade">Grade</string>
+    <string name="tests_no_results">No results yet</string>
+    <string name="tests_not_entered">not entered</string>
 </resources>

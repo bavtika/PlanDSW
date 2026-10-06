@@ -173,4 +173,8 @@
     <string name="tests_hidden">ukryty</string>
     <string name="tests_expand">Pokaż wszystko</string>
     <string name="tests_collapse">Zwiń</string>
+    <string name="tests_final">Ocena końcowa</string>
+    <string name="tests_grade">Ocena</string>
+    <string name="tests_no_results">Brak wyników</string>
+    <string name="tests_not_entered">brak</string>
 </resources>

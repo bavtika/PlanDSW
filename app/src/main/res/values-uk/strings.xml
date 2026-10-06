@@ -173,4 +173,8 @@
     <string name="tests_hidden">приховано</string>
     <string name="tests_expand">Показати все</string>
     <string name="tests_collapse">Згорнути</string>
+    <string name="tests_final">Підсумкова оцінка</string>
+    <string name="tests_grade">Оцінка</string>
+    <string name="tests_no_results">Результатів поки немає</string>
+    <string name="tests_not_entered">немає</string>
 </resources>
